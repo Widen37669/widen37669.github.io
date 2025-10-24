@@ -397,11 +397,16 @@
             <a href="https://judekeef.substack.com" target="_blank" title="Substack"><i class="fas fa-newspaper"></i></a>
         </div>
         <div class="footer-bottom">
-            <p>© 2025 Jude Keef.</p>
+            <p>©
+                <span id="copyright">
+                    <script>document.getElementById('copyright').appendChild(document.createTextNode(new Date().getFullYear()))</script>
+                </span>
+             Jude Keef.</p>
         </div>
     </footer>
 
     <script>
+
         // Page navigation
         const navLinks = document.querySelectorAll('.nav-link');
         const pageSections = document.querySelectorAll('.page-section');
