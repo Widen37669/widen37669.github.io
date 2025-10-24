@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jude Keef - Portfolio</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Lato', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #2c3e50;
+            height: 100vh;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Navigation */
+        nav {
+            background: #2c3e50;
+            padding: 1rem 0;
+            z-index: 1000;
+        }
+
+        nav ul {
+            display: flex;
+            justify-content: center;
+            gap: 3rem;
+            list-style: none;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: white;
+            font-weight: 500;
+            font-size: 1.1rem;
+            transition: color 0.3s ease;
+            position: relative;
+            cursor: pointer;
+        }
+
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: white;
+            transition: width 0.3s ease;
+        }
+
+        nav a:hover::after,
+        nav a.active::after {
+            width: 100%;
+        }
+
+        nav a:hover,
+        nav a.active {
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        /* Content Container */
+        .content-wrapper {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            overflow: hidden;
+        }
+
+        .content-box {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+            width: 100%;
+            max-width: 1100px;
+            height: 100%;
+            max-height: 600px;
+            padding: 3rem;
+            overflow-y: auto;
+            position: relative;
+        }
+
+        /* Page Sections */
+        .page-section {
+            display: none;
+            opacity: 0;
+            animation: fadeIn 0.4s ease-in-out forwards;
+        }
+
+        .page-section.active {
+            display: block;
+        }
+
+        .page-section.sparse {
+            padding: 6rem 0;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Home Page */
+        .home-content {
+            display: grid;
+            grid-template-columns: 250px 1fr;
+            gap: 3rem;
+            align-items: center;
+            height: 100%;
+            justify-items: center;
+            padding-top: 6rem;
+        }
+
+        .author-image {
+            width: 100%;
+            object-fit: cover;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            border-radius: 8px;
+        }
+
+        .bio-text {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .bio-text p {
+            font-size: 1rem;
+            line-height: 1.8;
+            margin-bottom: 1rem;
+            color: #555;
+        }
+
+        /* Work Page */
+        .publications-list {
+            max-width: 100%;
+        }
+
+        .publication-item {
+            margin-bottom: 1rem;
+        }
+
+        /* Substack Page */
+        .substack-content {
+            text-align: center;
+        }
+
+        .substack-content h2 {
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            color: #2c3e50;
+        }
+
+        .substack-content p {
+            font-size: 1.1rem;
+            color: #666;
+            margin-bottom: 2rem;
+        }
+
+        .substack-link {
+            display: inline-block;
+            background: #2c3e50;
+            color: white;
+            padding: 1rem 3rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .substack-link:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(44, 62, 80, 0.4);
+        }
+
+        /* Contact Page */
+        .contact-content {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .contact-content h2 {
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            text-align: center;
+            color: #2c3e50;
+        }
+
+        .contact-content p {
+            text-align: center;
+            color: #666;
+            margin-bottom: 2rem;
+        }
+
+        input, textarea {
+            width: 100%;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-family: inherit;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+
+        input:focus, textarea:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        button {
+            width: 100%;
+            background: #2c3e50;
+            color: white;
+            padding: 1rem;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(44, 62, 80, 0.4);
+        }
+
+        /* Footer */
+        footer {
+            background: #2c3e50;
+            color: white;
+            padding: 2rem;
+            text-align: center;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .social-links a {
+            color: white;
+            font-size: 1.5rem;
+            transition: color 0.3s ease, transform 0.3s ease;
+            text-decoration: none;
+        }
+
+        .social-links a:hover {
+            color: rgba(255, 255, 255, 0.7);
+            transform: translateY(-3px);
+        }
+
+        .footer-bottom p {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 0.9rem;
+        }
+
+        h2 {
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            color: #333;
+        }
+        @media (max-width: 768px) {
+            nav ul {
+                gap: 1.5rem;
+            }
+
+            nav a {
+                font-size: 1rem;
+            }
+
+            .content-box {
+                padding: 2rem;
+                max-height: none;
+            }
+
+            .home-content {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .author-image {
+                max-width: 200px;
+                margin: 0 auto;
+            }
+
+            .social-links {
+                gap: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <ul>
+            <li><a class="nav-link active" data-page="home">Home</a></li>
+            <li><a class="nav-link" data-page="work">Work</a></li>
+            <li><a class="nav-link" data-page="substack">Substack</a></li>
+            <li><a class="nav-link" data-page="contact">Contact</a></li>
+        </ul>
+    </nav>
+
+    <div class="content-wrapper">
+        <div class="content-box">
+            <!-- Home Page -->
+            <div id="home" class="page-section active">
+                <div class="home-content">
+                    <img src="Headshot.jpg" 
+                         alt="Jude Keef" 
+                         class="author-image">
+                    
+                    <div class="bio-text">
+                        <p><b>Jude Keef</b> is an essayist, game designer, and, when most in sync with the world, poet. Their work focuses on their lived experience as a Southern queer and interests in the surreal or the mystical, whether that manifests as form or content. They specialize in poetry and the lyric essay. Jude's work has been published in the <i>Sequoyah Review</i>, the <i>Southern Literary Festival Anthology</i>, and <i>Objects in the Mirror: An Anthology of Legacy</i>.</p>
+                        <p>They are a current student of the graduate creative writing program at UT Chattanooga, and have been on the masthead of journals such as <i>ContiguousLyt</i> and <i>UReCA: The NCHC Journal of Undergraduate Research & Creative Activity</i>.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Work Page -->
+            <div id="work" class="page-section sparse">
+                <h2>Select Publications</h2>
+                <div class="publications-list">
+                    <div class="publication-item">
+                        <p>"Thoughts in the Presence of an Old Stranger" and "No One Laughs." <i>Objects in This Mirror: An Anthology of Legacy.</i> Press 53, 2025.</p>
+                    </div>
+                    <div class="publication-item">
+                        <p>"The Trees." <i>The Walnut Branch</i>, vol. 3. Walnut Street Publishing, 2024.</p>
+                    </div>
+                    <div class="publication-item">
+                        <p><i>Identidem, and Other Lyric Essays.</i> Honors Theses. UTC Scholar, 2023.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Substack Page -->
+            <div id="substack" class="page-section sparse">
+                <div class="substack-content">
+                    <h2>Substack Coming Soon</h2>
+                    <p>Seeking to share the knowledge I'm gaining in my graduate program for free!</p>
+                    <a href="https://judekeef.substack.com" target="_blank" class="substack-link">
+                        Open Substack <i class="fas fa-external-link-alt" style="font-size: 0.9rem; margin-left: 0.5rem;"></i>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Contact Page -->
+            <div id="contact" class="page-section">
+                <div class="contact-content">
+                    <h2>Want to tell me something?</h2>
+                    <p>While you're here, let me know your thoughts.</p>
+                    <form action="https://formspree.io/f/xldpqaed" method="POST">
+                        <input type="text" name="name" placeholder="Your Name" required>
+                        <input type="email" name="email" placeholder="Your Email" required>
+                        <textarea name="message" placeholder="Your Message" required></textarea>
+                        <button type="submit">Send Message</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="social-links">
+            <a href="https://www.instagram.com/judekeef/" target="_blank" title="Instagram"><i class="fab fa-instagram"></i></a>
+            <a href="https://bsky.app/profile/judekeef.bsky.social" target="_blank" title="Bluesky"><i class="fab fa-bluesky"></i></a>
+            <a href="https://www.linkedin.com/in/jude-keef/" target="_blank" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
+            <a href="mailto:hello@judekeef.com" title="Email"><i class="fas fa-envelope"></i></a>
+            <a href="https://judekeef.substack.com" target="_blank" title="Substack"><i class="fas fa-newspaper"></i></a>
+        </div>
+        <div class="footer-bottom">
+            <p>© 2025 Jude Keef.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Page navigation
+        const navLinks = document.querySelectorAll('.nav-link');
+        const pageSections = document.querySelectorAll('.page-section');
+
+        navLinks.forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const targetPage = this.getAttribute('data-page');
+                
+                // Remove active class from all nav links and pages
+                navLinks.forEach(l => l.classList.remove('active'));
+                pageSections.forEach(p => p.classList.remove('active'));
+                
+                // Add active class to clicked nav link and target page
+                this.classList.add('active');
+                document.getElementById(targetPage).classList.add('active');
+            });
+        });
+
+        // Form submission handled by Formspree
+    </script>
+</body>
+</html>
